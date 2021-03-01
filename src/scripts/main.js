@@ -10,7 +10,8 @@ const request = (url) => {
       if (!response.ok) {
         setTimeout(() => {
           Promise.reject(new Error(
-            `${response.status} - ${response.statusText}`));
+            `${response.status} - ${response.statusText}`
+          ));
         }, 5000);
       };
 
@@ -49,13 +50,8 @@ getPhones()
     return phoneIds;
   })
   .then(phoneIds => {
-    const phoneDetailsArr = [];
-
-    phoneIds.forEach(phoneId => {
-      const phone = request(`/phones/${phoneId}.json`);
-
-      phoneDetailsArr.push(phone);
-    });
+    const phoneDetailsArr = phoneIds.map(id =>
+      request(`/phones/${id}.json`));
 
     return phoneDetailsArr;
   })
